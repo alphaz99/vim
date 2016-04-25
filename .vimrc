@@ -56,6 +56,18 @@ set softtabstop=4
 set smarttab
 set expandtab
 
+
+set completeopt=menuone,menu,longest
+
+set wildignore+=*\\tmp\\*,*.swp,*.swo,*.zip,.git,.cabal-sandbox
+set wildmode=longest,list,full
+set wildmenu
+set completeopt+=longest
+
+set t_Co=256
+
+set cmdheight=1
+
 " TABs in Makefiles
 autocmd FileType make set noexpandtab 
 
@@ -90,20 +102,41 @@ let g:NERDTreeWinSize = 25
 "Tagbar"
 let g:tagbar_width = 30
 
+"Lushtags"
+source ~/.vim/bundle/lushtags/plugin/tagbar-haskell.vim
+
 "Gundo"
 let g:gundo_width = 20
 let g:gundo_preview_bottom = 1
 let g:gundo_preview_height = 10
 
 "Syntastic"
-let g:syntastic_check_on_open=1
-let g:syntastic_error_symbol='X'
-let g:syntastic_warning_symbol='!'
-let g:syntastic_auto_loc_list=2
-let g:syntastic_loc_list_height=5
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+"YouCompleteMe"
+"let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+"let g:ycm_semantic_triggers = {'haskell' : ['.']}
 
 "vim-airline theme"
 let g:airline_theme='dark'
+
+"SuperTab"
+let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
+
+if has("gui_running")
+  imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+else " no gui
+  if has("unix")
+    inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+  endif
+endif
+
+"neco-ghc"
+let g:haskellmode_completion_ghc = 1
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -171,6 +204,8 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Plugin 'gmarik/vundle'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'shougo/neocomplete.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -183,3 +218,9 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'sjl/gundo.vim'
+Plugin 'eagletmt/neco-ghc'
+Plugin 'eagletmt/ghcmod-vim'
+Plugin 'dag/vim2hs'
+Plugin 'ervandew/supertab'
+Plugin 'shougo/vimproc.vim'
+Plugin 'bitc/lushtags'
