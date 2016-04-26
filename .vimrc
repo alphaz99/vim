@@ -16,6 +16,35 @@ endif
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
+" ==== Vundle plugins ====
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Plugin 'gmarik/vundle'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'shougo/neocomplete.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'bling/vim-airline'
+Plugin 'majutsushi/tagbar'
+Plugin 'tpope/vim-fugitive'
+Plugin 'a.vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'sjl/gundo.vim'
+Plugin 'eagletmt/neco-ghc'
+Plugin 'eagletmt/ghcmod-vim'
+Plugin 'dag/vim2hs'
+Plugin 'ervandew/supertab'
+Plugin 'shougo/vimproc.vim'
+Plugin 'bitc/lushtags'
+
+call vundle#end()
+
 " ==== Custom navigation ====
 "
 " " Control-L is escape.
@@ -116,10 +145,6 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
-"YouCompleteMe"
-"let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
-"let g:ycm_semantic_triggers = {'haskell' : ['.']}
-
 "vim-airline theme"
 let g:airline_theme='dark'
 
@@ -199,28 +224,3 @@ set colorcolumn=80
 nmap <F8> :TagbarToggle<CR>
 nnoremap <F5> :GundoToggle<CR>
 let mapleader=","
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-Plugin 'gmarik/vundle'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'shougo/neocomplete.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'bling/vim-airline'
-Plugin 'majutsushi/tagbar'
-Plugin 'tpope/vim-fugitive'
-Plugin 'a.vim'
-Plugin 'Raimondi/delimitMate'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'sjl/gundo.vim'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'eagletmt/ghcmod-vim'
-Plugin 'dag/vim2hs'
-Plugin 'ervandew/supertab'
-Plugin 'shougo/vimproc.vim'
-Plugin 'bitc/lushtags'
