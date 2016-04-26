@@ -131,9 +131,6 @@ let g:NERDTreeWinSize = 25
 "Tagbar"
 let g:tagbar_width = 30
 
-"Lushtags"
-source ~/.vim/bundle/lushtags/plugin/tagbar-haskell.vim
-
 "Gundo"
 let g:gundo_width = 20
 let g:gundo_preview_bottom = 1
