@@ -1,5 +1,5 @@
 " Maintainer:	Rahul Bachal 
-" Last change:	2016 January 28
+" Last change:	2017 March 21
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -12,18 +12,13 @@ if v:progname =~? "evim"
   finish
 endif
 
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
-
 " ==== Vundle plugins ====
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Plugin 'gmarik/vundle'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'shougo/neocomplete.vim'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -39,7 +34,6 @@ Plugin 'sjl/gundo.vim'
 Plugin 'eagletmt/neco-ghc'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'dag/vim2hs'
-Plugin 'ervandew/supertab'
 Plugin 'shougo/vimproc.vim'
 Plugin 'bitc/lushtags'
 
@@ -74,17 +68,10 @@ if has("vms")
 else
   set backup		" keep a backup file
 endif
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
 set tabstop=4           " size of a hard tabstop
 set shiftwidth=4        " size of an indent
-set autoindent
 set softtabstop=4
-set smarttab
 set expandtab
-
 
 set completeopt=menuone,menu,longest
 
@@ -99,9 +86,6 @@ set cmdheight=1
 
 " TABs in Makefiles
 autocmd FileType make set noexpandtab 
-
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -131,11 +115,6 @@ let g:NERDTreeWinSize = 25
 "Tagbar"
 let g:tagbar_width = 30
 
-"Gundo"
-let g:gundo_width = 20
-let g:gundo_preview_bottom = 1
-let g:gundo_preview_height = 10
-
 "Syntastic"
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -145,8 +124,6 @@ let g:syntastic_check_on_wq = 0
 "vim-airline theme"
 let g:airline_theme='dark'
 
-"SuperTab"
-let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
 
 if has("gui_running")
   imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
@@ -156,18 +133,8 @@ else " no gui
   endif
 endif
 
-"neco-ghc"
-let g:haskellmode_completion_ghc = 1
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
 
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
@@ -198,10 +165,6 @@ if has("autocmd")
     \ endif
 
   augroup END
-
-else
-
-  set autoindent		" always set autoindenting on
 
 endif " has("autocmd")
 
