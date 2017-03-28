@@ -12,32 +12,41 @@ if v:progname =~? "evim"
   finish
 endif
 
-" ==== Vundle plugins ====
+" ==== Dein plugins ====
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim " path to dein.vim
+call dein#begin(expand('~/.vim/dein'))
+call dein#add('Shougo/dein.vim')
+call dein#add('Shougo/vimproc.vim', {
+    \ 'build': {
+    \     'windows': 'tools\\update-dll-mingw',
+    \     'cygwin': 'make -f make_cygwin.mak',
+    \     'mac': 'make -f make_mac.mak',
+    \     'linux': 'make',
+    \     'unix': 'gmake',
+    \    },
+    \ })
+call dein#add('scrooloose/nerdtree',
+    \{'on_cmd': 'NERDTreeToggle'})
+call dein#add('neomake/neomake')
+call dein#add('jistr/vim-nerdtree-tabs')
+call dein#add('bling/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
+call dein#add('majutsushi/tagbar')
+call dein#add('tpope/vim-fugitive')
+call dein#add('Raimondi/delimitMate')
+call dein#add('airblade/vim-gitgutter')
+call dein#add('tpope/vim-surround')
+call dein#add('scrooloose/nerdcommenter')
+call dein#add('sjl/gundo.vim')
+call dein#add('sheerun/vim-polyglot')
+call dein#add('Shougo/deoplete.nvim',
+    \{'on_i': 1})
+call dein#add('zchee/deoplete-jedi')
+call dein#add('ervandew/supertab')
+call dein#add('joshdick/onedark.vim')
 
-Plugin 'gmarik/vundle'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'bling/vim-airline'
-Plugin 'majutsushi/tagbar'
-Plugin 'tpope/vim-fugitive'
-Plugin 'a.vim'
-Plugin 'Raimondi/delimitMate'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'sjl/gundo.vim'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'eagletmt/ghcmod-vim'
-Plugin 'dag/vim2hs'
-Plugin 'shougo/vimproc.vim'
-Plugin 'bitc/lushtags'
-
-call vundle#end()
+call dein#end()
 
 " ==== Custom navigation ====
 "
@@ -72,6 +81,7 @@ set tabstop=4           " size of a hard tabstop
 set shiftwidth=4        " size of an indent
 set softtabstop=4
 set expandtab
+filetype plugin indent on
 
 set completeopt=menuone,menu,longest
 
@@ -79,8 +89,6 @@ set wildignore+=*\\tmp\\*,*.swp,*.swo,*.zip,.git,.cabal-sandbox
 set wildmode=longest,list,full
 set wildmenu
 set completeopt+=longest
-
-set t_Co=256
 
 set cmdheight=1
 
@@ -101,10 +109,8 @@ endif
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-endif
+syntax on
+set hlsearch
 
 "NERDTreeTabs"
 let g:nerdtree_tabs_open_on_console_startup=1
@@ -115,14 +121,26 @@ let g:NERDTreeWinSize = 25
 "Tagbar"
 let g:tagbar_width = 30
 
-"Syntastic"
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
 "vim-airline theme"
 let g:airline_theme='dark'
+
+"SuperTab"
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
+"Deoplete"
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#jedi#show_docstring = 1
+
+"Airline"
+let g:airline_theme='dark'
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols = {}
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 
 
 if has("gui_running")
@@ -154,6 +172,10 @@ if has("autocmd")
   " Open TagBar automatically"
   autocmd VimEnter * nested :call tagbar#autoopen(1) 
 
+  " Run Neomake"
+  autocmd! BufWritePost * Neomake
+
+
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
@@ -178,9 +200,15 @@ endif
 
 " Color
 set t_Co=256
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+if (has("termguicolors"))
+    set termguicolors
+endif
+let g:onedark_termcolors=16
 colorscheme desert
 set colorcolumn=80
 "Keys"
 nmap <F8> :TagbarToggle<CR>
 nnoremap <F5> :GundoToggle<CR>
 let mapleader=","
+tnoremap <Esc> <C-\><C-n>
