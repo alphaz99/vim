@@ -45,6 +45,10 @@ call dein#add('Shougo/deoplete.nvim',
 call dein#add('zchee/deoplete-jedi')
 call dein#add('ervandew/supertab')
 call dein#add('joshdick/onedark.vim')
+call dein#add('vim-erlang/vim-erlang-tags')
+"call dein#add('junegunn/fzf')
+call dein#add('junegunn/fzf.vim')
+call dein#add('vim-erlang/vim-erlang-omnicomplete')
 
 call dein#end()
 
@@ -89,6 +93,8 @@ set wildignore+=*\\tmp\\*,*.swp,*.swo,*.zip,.git,.cabal-sandbox
 set wildmode=longest,list,full
 set wildmenu
 set completeopt+=longest
+
+set rtp+=/usr/local/opt/fzf
 
 set cmdheight=1
 
