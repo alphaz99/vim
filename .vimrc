@@ -46,8 +46,8 @@ call dein#add('zchee/deoplete-jedi')
 call dein#add('ervandew/supertab')
 call dein#add('joshdick/onedark.vim')
 call dein#add('vim-erlang/vim-erlang-tags')
-"call dein#add('junegunn/fzf')
-call dein#add('junegunn/fzf.vim')
+call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
+call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 call dein#add('vim-erlang/vim-erlang-omnicomplete')
 
 call dein#end()
@@ -94,7 +94,7 @@ set wildmode=longest,list,full
 set wildmenu
 set completeopt+=longest
 
-set rtp+=/usr/local/opt/fzf
+"set rtp+=/usr/local/opt/fzf
 
 set cmdheight=1
 
@@ -138,7 +138,7 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#show_docstring = 1
 
 "Airline"
-let g:airline_theme='dark'
+let g:airline_theme='onedark'
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
@@ -211,8 +211,10 @@ if (has("termguicolors"))
     set termguicolors
 endif
 let g:onedark_termcolors=16
-colorscheme desert
+colorscheme onedark
 set colorcolumn=80
+
+hi VertSplit guibg=bg guifg=lightred
 "Keys"
 nmap <F8> :TagbarToggle<CR>
 nnoremap <F5> :GundoToggle<CR>
