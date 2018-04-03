@@ -214,6 +214,8 @@ let g:onedark_termcolors=16
 colorscheme onedark
 set colorcolumn=80
 
+set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+
 hi VertSplit guibg=bg guifg=lightred
 "Keys"
 nmap <F8> :TagbarToggle<CR>
