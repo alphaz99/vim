@@ -222,3 +222,7 @@ nmap <F8> :TagbarToggle<CR>
 nnoremap <F5> :GundoToggle<CR>
 let mapleader=","
 tnoremap <Esc> <C-\><C-n>
+
+" Python
+let g:python_host_prog = "~/virtualenvs/neovim2/bin/python"
+let g:python3_host_prog = "~/virtualenvs/neovim3/bin/python"
