@@ -10,67 +10,74 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Dein plugin manager {{{1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if &compatible
+  set nocompatible
+endif
 
 " Dein {{{2
 set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim " path to dein.vim
-call dein#begin(expand('~/.vim/dein'))
-call dein#add('Shougo/dein.vim')
 
-" Plugins
+if dein#load_state('~/.cache/dein')
+    call dein#begin(expand('~/.vim/dein'))
+    call dein#add('Shougo/dein.vim')
 
-" NERDtree
-call dein#add('scrooloose/nerdtree',
-    \{'on_cmd': 'NERDTreeToggle'})
-call dein#add('jistr/vim-nerdtree-tabs')
+    " Plugins
 
-" Vim airline
-call dein#add('bling/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
+    " NERDtree
+    call dein#add('scrooloose/nerdtree',
+                \{'on_cmd': 'NERDTreeToggle'})
+    call dein#add('jistr/vim-nerdtree-tabs')
 
-" Code
-call dein#add('Raimondi/delimitMate')
-call dein#add('airblade/vim-gitgutter')
-call dein#add('tpope/vim-surround')
-call dein#add('scrooloose/nerdcommenter')
-call dein#add('junegunn/vim-easy-align')
+    " Vim airline
+    call dein#add('bling/vim-airline')
+    call dein#add('vim-airline/vim-airline-themes')
 
-" Theme
-call dein#add('joshdick/onedark.vim')
+    " Code
+    call dein#add('Raimondi/delimitMate')
+    call dein#add('airblade/vim-gitgutter')
+    call dein#add('tpope/vim-surround')
+    call dein#add('scrooloose/nerdcommenter')
+    call dein#add('junegunn/vim-easy-align')
 
-" Completion
-call dein#add('sheerun/vim-polyglot')
-call dein#add('majutsushi/tagbar')
-call dein#add('ervandew/supertab')
-call dein#add('neoclide/coc.nvim', {'merged':0, 'rev': 'release'})
-call dein#add('vim-erlang/vim-erlang-tags')
+    " Theme
+    call dein#add('joshdick/onedark.vim')
 
-" FZF
-call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
-call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-call dein#add('yuki-ycino/fzf-preview.vim')
+    " Completion
+    call dein#add('sheerun/vim-polyglot')
+    call dein#add('majutsushi/tagbar')
+    call dein#add('ervandew/supertab')
+    call dein#add('neoclide/coc.nvim', {'merged':0, 'rev': 'release'})
+    call dein#add('vim-erlang/vim-erlang-tags')
 
-" Misc
-call dein#add('Shougo/vimproc.vim', {
-    \ 'build': {
-    \     'windows': 'tools\\update-dll-mingw',
-    \     'cygwin': 'make -f make_cygwin.mak',
-    \     'mac': 'make -f make_mac.mak',
-    \     'linux': 'make',
-    \     'unix': 'gmake',
-    \    },
-    \ })
-call dein#add('tpope/vim-fugitive')
-call dein#add('sjl/gundo.vim')
-call dein#add('ryanoasis/vim-devicons')
+    " FZF
+    call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
+    call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+    call dein#add('yuki-ycino/fzf-preview.vim')
 
-" Not used
-"call dein#add('neomake/neomake')
-"call dein#add('Shougo/deoplete.nvim',
+    " Misc
+    call dein#add('Shougo/vimproc.vim', {
+                \ 'build': {
+                \     'windows': 'tools\\update-dll-mingw',
+                \     'cygwin': 'make -f make_cygwin.mak',
+                \     'mac': 'make -f make_mac.mak',
+                \     'linux': 'make',
+                \     'unix': 'gmake',
+                \    },
+                \ })
+    call dein#add('tpope/vim-fugitive')
+    call dein#add('sjl/gundo.vim')
+    call dein#add('ryanoasis/vim-devicons')
+
+    " Not used
+    "call dein#add('neomake/neomake')
+    "call dein#add('Shougo/deoplete.nvim',
     "\{'on_i': 1})
-"call dein#add('zchee/deoplete-jedi')
-"call dein#add('hyhugh/coc-erlang_ls', {'build': 'yarn install --frozen-lockfile'})
+    "call dein#add('zchee/deoplete-jedi')
+    "call dein#add('hyhugh/coc-erlang_ls', {'build': 'yarn install --frozen-lockfile'})
 
-call dein#end()
+    call dein#end()
+    call dein#save_state()
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General configuration
