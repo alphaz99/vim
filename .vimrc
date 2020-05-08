@@ -17,7 +17,7 @@ endif
 " Dein {{{2
 set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim " path to dein.vim
 
-if dein#load_state('~/.cache/dein')
+if dein#load_state('~/.vim/dein')
     call dein#begin(expand('~/.vim/dein'))
     call dein#add('Shougo/dein.vim')
 
