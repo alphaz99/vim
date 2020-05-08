@@ -7,17 +7,16 @@
 "  for MS-DOS and Win32:  $VIM\_vimrc
 "	    for OpenVMS:  sys$login:.vimrc
 
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Dein plugin manager {{{1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" ==== Dein plugins ====
-
-" Dein
+" Dein {{{2
 set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim " path to dein.vim
 call dein#begin(expand('~/.vim/dein'))
 call dein#add('Shougo/dein.vim')
+
+" Plugins
 
 " NERDtree
 call dein#add('scrooloose/nerdtree',
@@ -62,6 +61,7 @@ call dein#add('Shougo/vimproc.vim', {
     \ })
 call dein#add('tpope/vim-fugitive')
 call dein#add('sjl/gundo.vim')
+call dein#add('ryanoasis/vim-devicons')
 
 " Not used
 "call dein#add('neomake/neomake')
@@ -72,22 +72,9 @@ call dein#add('sjl/gundo.vim')
 
 call dein#end()
 
-" ==== Custom navigation ====
-"
-" " Control-L is escape.
- nmap <C-L> <ESC>
- imap <C-L> <ESC>
-"
-" " Navigating tabs and windows.
- nmap <C-J> :tabprevious<CR>
- nmap <C-K> :tabnext<CR>
-"
-"
-
-" Puts line numbers for reference
-" Colors them grey.
-set number
-highlight LineNr ctermfg=grey
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Always show line numbers, but only in current window.
 :au WinEnter * :setlocal number
@@ -113,6 +100,18 @@ set wildignore+=*\\tmp\\*,*.swp,*.swo,*.zip,.git,.cabal-sandbox
 set wildmode=longest,list,full
 set wildmenu
 
+" if hidden is not set, TextEdit might fail.
+set hidden
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
 "set rtp+=/usr/local/opt/fzf
 
 set cmdheight=1
@@ -120,22 +119,14 @@ set cmdheight=1
 " TABs in Makefiles
 autocmd FileType make set noexpandtab 
 
-" Don't use Ex mode, use Q for formatting
-map Q gq
-
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
-
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
   set mouse=a
 endif
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-syntax on
-set hlsearch
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin-specific configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "NERDTreeTabs"
 let g:nerdtree_tabs_open_on_console_startup=1
@@ -146,9 +137,6 @@ let g:NERDTreeWinSize = 25
 "Tagbar"
 let g:tagbar_width = 30
 
-"vim-airline theme"
-let g:airline_theme='dark'
-
 "SuperTab"
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
@@ -156,20 +144,9 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 "let g:deoplete#enable_at_startup = 1
 "let g:deoplete#sources#jedi#show_docstring = 1
 
-"Airline"
-let g:airline_theme='onedark'
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols = {}
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-
 "FZF
-let g:fzf_preview_command = 'bat --color=always --style=grid {-1} --theme=ansi-dark'
-
+let g:fzf_preview_command = 'bat --color=always --style=grid {-1}'
+let g:fzf_preview_use_dev_icons = 1
 
 if has("gui_running")
   imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
@@ -200,10 +177,6 @@ if has("autocmd")
   " Open TagBar automatically"
   autocmd BufEnter * nested :call tagbar#autoopen(1) 
 
-  " Run Neomake"
-  "autocmd! BufWritePost * Neomake
-
-
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
@@ -226,24 +199,83 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-" Color
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Theme and visual
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" True color
 set t_Co=256
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 if (has("termguicolors"))
     set termguicolors
 endif
 let g:onedark_termcolors=16
+
+" Theme
 colorscheme onedark
+
 set colorcolumn=80
 
+" Set insert cursor
 set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 
+" Change color of vertical split
 hi VertSplit guibg=bg guifg=lightred
-"Keys"
-nmap <F8> :TagbarToggle<CR>
-nnoremap <F5> :GundoToggle<CR>
+
+" Puts line numbers for reference
+" Colors them grey.
+set number
+highlight LineNr ctermfg=grey
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+syntax on
+set hlsearch
+
+"Airline
+  if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+  endif
+
+let g:airline_theme='onedark'
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.dirty='⚡'
+
+"vim-airline theme
+let g:airline_theme='dark'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Keys
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Leader
 let mapleader=","
+
+" Terminal escape
 tnoremap <Esc> <C-\><C-n>
+
+" Control-L is escape.
+ nmap <C-L> <ESC>
+ imap <C-L> <ESC>
+
+" Navigating tabs and windows.
+ nmap <C-J> :tabprevious<CR>
+ nmap <C-K> :tabnext<CR>
+
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
+" Plugin-specific keys
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -251,34 +283,22 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" Python
-let g:python_host_prog = "/home/rbachal/virtualenvs/neovim2/bin/python"
-let g:python3_host_prog = "/home/rbachal/virtualenvs/neovim3/bin/python"
+" Toggle tagbar with F8
+nmap <F8> :TagbarToggle<CR>
 
-" if hidden is not set, TextEdit might fail.
-set hidden
+" Toggle Gundo with F5
+nnoremap <F5> :GundoToggle<CR>
 
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Python configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
+let g:python_host_prog = "$HOME/virtualenvs/neovim2/bin/python"
+let g:python3_host_prog = "$HOME/virtualenvs/neovim3/bin/python"
 
-" always show signcolumns
-set signcolumn=yes
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-"" inoremap <silent><expr> <TAB>
-      "" \ pumvisible() ? "\<C-n>" :
-      "" \ <SID>check_back_space() ? "\<TAB>" :
-      "" \ coc#refresh()
-"" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Coc configuration
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
@@ -344,8 +364,8 @@ omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
 " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+"nmap <silent> <TAB> <Plug>(coc-range-select)
+"xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -376,3 +396,5 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" vim:foldmethod=marker:foldlevel=0
