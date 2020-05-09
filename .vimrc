@@ -79,6 +79,11 @@ if dein#load_state('~/.vim/dein')
     call dein#save_state()
 endif
 
+"On startup, install not-installed plugins.
+if dein#check_install()
+  call dein#install()
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
