@@ -1,0 +1,18 @@
+{
+    "languageserver": {
+        "custom-erlang": {
+            "command": "erlang_ls",
+            "args": [
+                "--transport",
+                "stdio",
+                "--log-dir",
+                "ls-logs"
+            ],
+            "rootPatterns": ["erlang_ls.config"],
+            "requireRootPattern": true,
+            "filetypes": ["erlang"],
+            "trace.server": "verbose"
+        }
+    },
+    "diagnostic.enable": true
+}

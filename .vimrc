@@ -128,9 +128,6 @@ set signcolumn=yes
 
 set cmdheight=1
 
-" TABs in Makefiles
-autocmd FileType make set noexpandtab 
-
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
   set mouse=a
