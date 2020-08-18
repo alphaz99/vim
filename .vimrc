@@ -25,7 +25,7 @@ if dein#load_state('~/.vim/dein')
     " FZF {{{3
     call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
     call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-    call dein#add('yuki-ycino/fzf-preview.vim')
+    call dein#add('yuki-ycino/fzf-preview.vim', { 'rev': 'release' })
     call dein#add('pbogut/fzf-mru.vim')
 
     " Git {{{3
@@ -40,6 +40,8 @@ if dein#load_state('~/.vim/dein')
     call dein#add('voldikss/vim-floaterm')
     call dein#add('liuchengxu/vim-which-key')
     call dein#add('mhinz/vim-startify')
+    call dein#add('romainl/vim-qf')
+    call dein#add('tpope/vim-unimpaired')
 
 
 
@@ -193,8 +195,8 @@ endif
 let g:fzf_preview_command = 'bat --color=always --style=grid {-1}'
 let g:fzf_preview_lines_command = 'bat --color=always --style=grid --plain'
 let g:fzf_preview_filelist_command = 'rg --files --hidden --follow --no-messages -g \!"* *"' " Installed ripgrep
-let g:fzf_preview_filelist_postprocess_command = 'xargs -d "\n" ls -U --color'
 let g:fzf_preview_use_dev_icons = 0
+let g:fzf_preview_dev_icons_limit = 10000
 
 let g:fzf_layout = { 'window': {
             \ 'width': 0.9,
@@ -437,17 +439,15 @@ nnoremap <c-l> <c-w>l
 " buffer cycling
 nnoremap <bs> <c-^>
 
+" File
+nnoremap <Leader>w :w<cr>
+nnoremap <Leader>q :q<cr>
+
 " If we have mapped <C-i> to F6 using keyboard
 nnoremap <F6> <C-i>
 
 " Use tab to toggle folds
 nnoremap <Tab> za
-
-" Switch H,L with ^,$
-nnoremap H ^
-nnoremap ^ H
-nnoremap L $
-nnoremap $ L
 
 " Clear search
 "nnoremap <C-l> :nohlsearch<cr>
@@ -495,7 +495,7 @@ nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 
 " FZF {{{2
 " -----------------------------------------------------------------------------
-nnoremap <silent> <Leader>fp     :<C-u>FzfPreviewFromResources project_mru directory<CR>
+nnoremap <silent> <Leader>fp     :<C-u>FzfPreviewFromResources mru directory<CR>
 nnoremap <silent> <Leader>fgs    :<C-u>FzfPreviewGitStatus<CR>
 nnoremap <silent> <Leader>fb     :<C-u>FzfPreviewBuffers<CR>
 nnoremap <silent> <Leader>fB     :<C-u>FzfPreviewAllBuffers<CR>
@@ -512,6 +512,7 @@ nnoremap <silent> <Leader>fl     :<C-u>FzfPreviewLocationList<CR>
 
 nnoremap <silent> <Leader>p      :<C-u>Buffers<CR>
 nnoremap <silent> <Leader>/      :<C-u>RG<CR>
+nnoremap <silent> <Leader>*      :<C-u>Rg <C-R><C-W><CR>
 
 " Gundo {{{2
 " -----------------------------------------------------------------------------
