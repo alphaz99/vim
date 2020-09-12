@@ -36,6 +36,9 @@ if dein#load_state('~/.vim/dein')
             \   'on_map' : '<Plug>(git-messenger)',
             \ })
 
+    " Tmux {{{3
+    call dein#add('christoomey/vim-tmux-navigator')
+
     " Internal {{{3
     call dein#add('voldikss/vim-floaterm')
     call dein#add('liuchengxu/vim-which-key')
